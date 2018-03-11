@@ -1,0 +1,29 @@
+version: '1.0'
+
+steps:
+
+  package_chart:
+    description: package hermes chart
+    image: alpine:3.7
+    commands:
+    - echo package chart ...
+
+  update_chart_repo:
+    description: update chart in stable repository
+    image: alpine:3.7
+    commands:
+    - echo updating stable chart repo ...
+    when:
+      branch:
+        only:
+          - master
+
+  update_chart_repo_dev:
+    description: update chart in dev repository
+    image: alpine:3.7
+    commands:
+    - echo updating dev chart repo ...
+    when:
+      branch:
+        only:
+          - master

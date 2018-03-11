@@ -1,0 +1,10 @@
+.vscode
+.bin
+.env
+
+# helm dev files
+hermes/charts
+*.tgz
+index.yaml
+/.gtm/
+.idea
