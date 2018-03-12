@@ -14,5 +14,5 @@ steps:
     image: codefresh/plugin-helm:2.8.1
     commands:
     - "VERSION=$(grep \"version: \" hermes/Chart.yaml | awk '{print $2}')"
-    - "PACKAGE=hermes-$VERSION.tgz"
-    - "curl -X POST --user ${{BASIC_AUTH_USER}}:${{BASIC_AUTH_PASS}} --fail --data-binary \"@$PACKAGE\" ${{HELM_REPO_PATH}}"
+    - PACKAGE=hermes-$VERSION.tgz
+    - curl -X POST --user ${{BASIC_AUTH_USER}}:${{BASIC_AUTH_PASS}} --fail --data-binary "@$PACKAGE" ${{HELM_REPO_PATH}}
