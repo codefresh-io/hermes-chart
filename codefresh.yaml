@@ -12,6 +12,7 @@ steps:
     title: package hermes chart
     image: codefresh/plugin-helm:2.8.1
     commands:
+    - helm init --client-only
     - helm package -u hermes
 
   update_chart_repo:
