@@ -2,28 +2,22 @@ version: '1.0'
 
 steps:
 
-  package_chart:
-    description: package hermes chart
+  check_vars:
+    title: check for expected variables
     image: alpine:3.7
     commands:
-    - echo package chart ...
+    - "if [ ! -n \"$HERM_REPO_PATH\" ]; then echo \"HERM_REPO_PATH is not defined\" && exit 1; fi"
+
+  package_chart:
+    title: package hermes chart
+    image: codefresh/plugin-helm:2.8.1
+    commands:
+    - helm package -u hermes
 
   update_chart_repo:
-    description: update chart in stable repository
-    image: alpine:3.7
+    title: update hermes chart in repository
+    image: codefresh/plugin-helm:2.8.1
     commands:
-    - echo updating stable chart repo ...
-    when:
-      branch:
-        only:
-          - master
-
-  update_chart_repo_dev:
-    description: update chart in dev repository
-    image: alpine:3.7
-    commands:
-    - echo updating dev chart repo ...
-    when:
-      branch:
-        only:
-          - master
+    - "VERSION=$(grep \"version: \" hermes/Chart.yaml | awk '{print $2}')"
+    - "PACKAGE=hermes-$VERSION.tgz"
+    - "curl --user ${{BASIC_AUTH_USER}}:${{BASIC_AUTH_PASS}} --fail --data-binary \"@$PACKAGE\" $HELM_REPO_PATH"
