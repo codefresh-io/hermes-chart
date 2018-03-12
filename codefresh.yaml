@@ -8,7 +8,7 @@ steps:
     commands:
     - "if [ ! -n \"$HERM_REPO_PATH\" ]; then echo \"HERM_REPO_PATH is not defined\" && exit 1; fi"
     - "echo $HERM_REPO_PATH"
-    
+
   package_chart:
     title: package hermes chart
     image: codefresh/plugin-helm:2.8.1
@@ -22,4 +22,6 @@ steps:
     commands:
     - "VERSION=$(grep \"version: \" hermes/Chart.yaml | awk '{print $2}')"
     - "PACKAGE=hermes-$VERSION.tgz"
-    - "curl --user ${{BASIC_AUTH_USER}}:${{BASIC_AUTH_PASS}} --fail --data-binary \"@$PACKAGE\" $HELM_REPO_PATH"
+    - echo $PACKAGE
+    - echo $HELM_REPO_PATH
+    - "curl -X POST --user ${{BASIC_AUTH_USER}}:${{BASIC_AUTH_PASS}} --fail --data-binary \"@$PACKAGE\" $HELM_REPO_PATH"
