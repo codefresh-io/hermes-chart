@@ -7,7 +7,8 @@ steps:
     image: alpine:3.7
     commands:
     - "if [ ! -n \"$HERM_REPO_PATH\" ]; then echo \"HERM_REPO_PATH is not defined\" && exit 1; fi"
-
+    - "echo $HERM_REPO_PATH"
+    
   package_chart:
     title: package hermes chart
     image: codefresh/plugin-helm:2.8.1
