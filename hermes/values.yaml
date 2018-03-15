@@ -20,12 +20,8 @@ redis:
   nameOverride: store
   port: 6379
 
-# Redis store size
-store:
-  size: 8Gi
-
 # set log level
-logLevel: info
+logLevel: debug
 
 # configure cfapi access
 cfapi:
