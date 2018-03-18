@@ -8,3 +8,9 @@ hermes/charts
 index.yaml
 /.gtm/
 .idea
+
+# decrypted files
+**/*-dec.yaml
+
+# backup files
+**/bak/*
