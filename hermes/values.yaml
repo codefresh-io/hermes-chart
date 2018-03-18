@@ -26,7 +26,7 @@ logLevel: debug
 # configure cfapi access
 cfapi:
 ## cfapi.token - get it from Codefresh application
-## 
+##
 # token:
 
 ## cfapi.service - service name (default: {{.Release.Name}}-cfapi)
@@ -51,3 +51,18 @@ ingress:
   annotations:
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
+cronjob:
+  deploy: true
+  image: codefresh/hermes-store-backup
+  tag: 0.0.4
+global:
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: nodeType
+            operator: NotIn
+            values:
+            - internal
+            - worker

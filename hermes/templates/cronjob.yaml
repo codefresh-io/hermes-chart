@@ -1,0 +1,60 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: {{ template "hermes.name" . }}-store-backup
+  labels:
+    app: {{ template "hermes.name" . }}-store-backup
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  schedule: "0 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          affinity:
+{{ toYaml ( default .Values.global.affinity .Values.cronjob.affinity ) | indent 12 }}
+          containers:
+          - env:
+            - name: APP_ENVIRONMENT
+              valueFrom:
+                configMapKeyRef:
+                  key: env
+                  name: app
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: redis-password
+                  name: hermes-store
+            - name: S3_URL
+              valueFrom:
+                secretKeyRef:
+                  key: hermes-store-backup.s3-url
+                  name: hermes-store-backup
+            - name: SLACK_CHANNEL
+              valueFrom:
+                secretKeyRef:
+                  key: hermes-store-backup.slack-channel
+                  name: hermes-store-backup
+            - name: SLACK_WEBHOOK_URL
+              valueFrom:
+                secretKeyRef:
+                  key: hermes-store-backup.slack-url
+                  name: hermes-store-backup
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  key: hermes-store-backup.aws-access-key-id
+                  name: hermes-store-backup
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  key: hermes-store-backup.aws-secret-access-key
+                  name: hermes-store-backup
+            image: {{ .Values.cronjob.image }}:{{ .Values.cronjob.tag }}
+            imagePullPolicy: Always
+            name: {{ .Chart.Name }}-store-backup
+          imagePullSecrets:
+          - name: docker-registry
+          restartPolicy: OnFailure
