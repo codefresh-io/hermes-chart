@@ -4,6 +4,7 @@ metadata:
   name: {{ template "hermes.fullname" . }}
   labels:
     app: {{ template "hermes.name" . }}
+    role: {{ template "hermes.role" . }}
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
@@ -13,6 +14,7 @@ spec:
     metadata:
       labels:
         app: {{ template "hermes.name" . }}
+        role: {{ template "hermes.role" . }}
         release: {{ .Release.Name }}
     spec:
       volumes:
