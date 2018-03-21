@@ -61,3 +61,30 @@ The following tables lists the configurable parameters of the Hermes chart and t
 ## Dependency
 
 Hermes requires [Redis chart](https://hub.kubeapps.com/charts/stable/redis) (`~1.1.9` version).
+
+## Backup and Restore
+
+We are running pod named hermes-store-backup. This pod processes crond with such job:
+```
+0 * * * *   /opt/codefresh/backup
+```
+It means that `/opt/codefresh/backup` script runs every hour, creates RDB snapshot of hermes-store data and uploads it to AWS S3 `cf-backup-hermes` bucket as `hermes.backup` file.
+
+If necessary we can attach to the pod and perform `/opt/codefresh/backup` script manually.
+
+To restore the data we should use `/opt/codefresh/restore` script. If we run this script with no argument the script will take the latest version of `hermes.backup` file and loads it into hermes-store. 
+
+If we want to recover any specific version of `hermes.backup` file we should pass file VersionId as command argument. Example:
+
+```
+/opt/codefresh/restore 9koX0K1dp83Lrcsd4AV2YiG9yVKFmRdF
+```
+
+Important note:
+
+Do not forget to disable `appendonly` mode in values.yaml
+
+```
+redis:
+  redisExtraFlags: "--appendonly no"
+```

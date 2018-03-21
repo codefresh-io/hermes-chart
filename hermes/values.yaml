@@ -19,6 +19,7 @@ service:
 redis:
   nameOverride: store
   port: 6379
+  redisExtraFlags: "--appendonly no"
 
 # set log level
 logLevel: debug
@@ -26,7 +27,7 @@ logLevel: debug
 # configure cfapi access
 cfapi:
 ## cfapi.token - get it from Codefresh application
-## 
+##
 # token:
 
 ## cfapi.service - service name (default: {{.Release.Name}}-cfapi)
@@ -51,3 +52,18 @@ ingress:
   annotations:
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
+backup:
+  replicaCount: 1
+  image: codefresh/hermes-store-backup
+  tag: 0.1.0
+global:
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: nodeType
+            operator: NotIn
+            values:
+            - internal
+            - worker
