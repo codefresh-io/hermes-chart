@@ -19,6 +19,7 @@ service:
 redis:
   nameOverride: store
   port: 6379
+  redisExtraFlags: "--appendonly no"
 
 # set log level
 logLevel: debug
@@ -54,7 +55,7 @@ ingress:
 cronjob:
   deploy: true
   image: codefresh/hermes-store-backup
-  tag: 0.0.4
+  tag: 0.1.0
 global:
   affinity:
     nodeAffinity:
