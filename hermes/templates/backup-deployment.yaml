@@ -1,9 +1,10 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: {{ template "hermes.name" . }}-store-backup
+  name: {{ template "hermes.fullname" . }}-store-backup
   labels:
-    app: {{ template "hermes.name" . }}-store-backup
+    app: {{ template "hermes.name" . }}
+    role: {{ template "hermes.role" . }}-store-backup
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
@@ -12,7 +13,8 @@ spec:
   template:
     metadata:
       labels:
-        app: {{ template "hermes.name" . }}-store-backup
+        app: {{ template "hermes.name" . }}
+        role: {{ template "hermes.role" . }}-store-backup
     spec:
       affinity:
 {{ toYaml ( default .Values.global.affinity .Values.backup.affinity ) | indent 8 }}
