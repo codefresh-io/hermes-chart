@@ -1,9 +1,10 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: {{ template "hermes.name" . }}-store-backup
+  name: {{ template "hermes.fullname" . }}-store-backup
   labels:
-    app: {{ template "hermes.name" . }}-store-backup
+    app: {{ template "hermes.name" . }}
+    role: {{ template "hermes.role" . }}-store-backup
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
@@ -12,7 +13,8 @@ spec:
   template:
     metadata:
       labels:
-        app: {{ template "hermes.name" . }}-store-backup
+        app: {{ template "hermes.name" . }}
+        role: {{ template "hermes.role" . }}-store-backup
     spec:
       affinity:
 {{ toYaml ( default .Values.global.affinity .Values.backup.affinity ) | indent 8 }}
@@ -25,34 +27,34 @@ spec:
               name: app
         - name: REDIS_PASSWORD
           valueFrom:
-            secretKeyRef:
-              key: redis-password
-              name: {{ template "hermes.name" . }}-store
+              secretKeyRef:
+                name: "{{ .Release.Name }}-{{ .Values.redis.nameOverride }}"
+                key: redis-password
         - name: S3_URL
           valueFrom:
             secretKeyRef:
               key: s3-url
-              name: {{ template "hermes.name" . }}-store-backup
+              name: {{ template "hermes.fullname" . }}-store-backup
         - name: SLACK_CHANNEL
           valueFrom:
             secretKeyRef:
               key: slack-channel
-              name: {{ template "hermes.name" . }}-store-backup
+              name: {{ template "hermes.fullname" . }}-store-backup
         - name: SLACK_WEBHOOK_URL
           valueFrom:
             secretKeyRef:
               key: slack-url
-              name: {{ template "hermes.name" . }}-store-backup
+              name: {{ template "hermes.fullname" . }}-store-backup
         - name: AWS_ACCESS_KEY_ID
           valueFrom:
             secretKeyRef:
               key: aws-access-key-id
-              name: {{ template "hermes.name" . }}-store-backup
+              name: {{ template "hermes.fullname" . }}-store-backup
         - name: AWS_SECRET_ACCESS_KEY
           valueFrom:
             secretKeyRef:
               key: aws-secret-access-key
-              name: {{ template "hermes.name" . }}-store-backup
+              name: {{ template "hermes.fullname" . }}-store-backup
         image: {{ .Values.backup.image }}:{{ .Values.backup.tag }}
         imagePullPolicy: Always
         name: {{ .Chart.Name }}-store-backup

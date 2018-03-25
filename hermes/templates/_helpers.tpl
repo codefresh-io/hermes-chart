@@ -10,8 +10,7 @@ Expand the name of the chart.
 Create a default fully qualified app role.
 */}}
 {{- define "hermes.role" -}}
-{{- $name := default "trigger-manager" .Values.roleOverride -}}
-{{- printf "%s-%s" .Release.Name $name -}}
+{{- default "trigger-manager" .Values.roleOverride -}}
 {{- end -}}
 
 {{/*
