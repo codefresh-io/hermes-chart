@@ -30,6 +30,8 @@ spec:
           env:
           - name: LOG_LEVEL
             value: {{ .Values.logLevel | quote }}
+          - name: LOG_JSON
+            value: {{ .Values.logJSON | quote }}
           {{- if ne .Values.logLevel "debug" }}
           - name: GIN_MODE
             value: release
