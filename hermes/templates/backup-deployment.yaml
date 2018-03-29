@@ -24,7 +24,7 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: env
-              name: app
+              name: {{ template "hermes.fullname" . }}-store-backup
         - name: REDIS_PASSWORD
           valueFrom:
               secretKeyRef:
