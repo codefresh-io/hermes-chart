@@ -58,7 +58,7 @@ ingress:
 backup:
   replicaCount: 1
   image: codefresh/hermes-store-backup
-  tag: 0.1.0
+  tag: 0.1.2
   env: production
 global:
   affinity:
