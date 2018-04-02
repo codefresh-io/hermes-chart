@@ -21,15 +21,14 @@ spec:
       containers:
       - env:
         - name: APP_ENVIRONMENT
-          valueFrom:
-            configMapKeyRef:
-              key: env
-              name: {{ template "hermes.fullname" . }}-store-backup
+          value: {{ .Values.backup.env }}
+        - name: STORE_SERVICE
+          value: {{ .Release.Name }}-{{ .Values.redis.nameOverride }}:{{ .Values.redis.port }}
         - name: REDIS_PASSWORD
           valueFrom:
-              secretKeyRef:
-                name: "{{ .Release.Name }}-{{ .Values.redis.nameOverride }}"
-                key: redis-password
+            secretKeyRef:
+              name: {{ .Release.Name }}-{{ .Values.redis.nameOverride }}
+              key: redis-password
         - name: S3_URL
           valueFrom:
             secretKeyRef:
