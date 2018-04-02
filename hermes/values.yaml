@@ -59,7 +59,7 @@ backup:
   replicaCount: 1
   image: codefresh/hermes-store-backup
   tag: 0.1.2
-  env: production
+  env: staging
 global:
   affinity:
     nodeAffinity:
