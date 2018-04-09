@@ -54,11 +54,11 @@ data:
             "kind": "codefresh",
             "service-url": "http://{{ printf "%s-cronus" .Release.Name }}",
             "uri-template": "cron:codefresh:{{"{{"}}expression{{"}}"}}:{{"{{"}}message{{"}}"}}",
-            "uri-regex": "^cron:codefresh:@yearly|@annually|@montly|@weekly|@daily|@midnight|@hourly|([a-zA-Z0-9*/,-?]+\\s?){6}:[a-zA-Z0-9_-]{2,64}$",
+            "uri-regex": "^cron:codefresh:@yearly|@annually|@montly|@weekly|@daily|@midnight|@hourly|([a-zA-Z0-9*/,-?]+\\s?){6,7}:[a-zA-Z0-9_-]{2,64}$",
             "config": [{
                     "name": "expression",
                     "type": "cron",
-                    "validator": "^@yearly|@annually|@montly|@weekly|@daily|@midnight|@hourly|([a-zA-Z0-9*/,-?]+\\s?){6}$",
+                    "validator": "^@yearly|@annually|@montly|@weekly|@daily|@midnight|@hourly|([a-zA-Z0-9*/,-?]+\\s?){6,7}$",
                     "required": true
                 },
                 {
