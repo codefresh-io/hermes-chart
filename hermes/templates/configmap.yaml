@@ -45,7 +45,7 @@ data:
               {
                 "name": "tag",
                 "type": "string",
-                "validator": "^[a-zA-Z0-9._-]{1,128}$"
+                "validator": "^.+$"
               }
             ]
           },
