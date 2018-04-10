@@ -1,3 +1,5 @@
+{{- if .Values.backup.enabled }}
+---
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
@@ -60,4 +62,4 @@ spec:
       imagePullSecrets:
       - name: docker-registry
       restartPolicy: Always
-
+{{- end }}
