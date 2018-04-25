@@ -24,8 +24,8 @@ redis:
 # set log level
 logLevel: debug
 
-# set log format to Codefresh JSON
-# logJSON: true
+# true - set log format to Codefresh JSON
+logJSON: false
 
 # configure cfapi access
 cfapi:
