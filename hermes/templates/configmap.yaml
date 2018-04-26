@@ -32,7 +32,7 @@ data:
               {
                 "name": "name",
                 "type": "string",
-                "help": "docker image name"
+                "help": "docker image name",
                 "validator": "^[a-z0-9_-]+$",
                 "required": true
               },
@@ -61,7 +61,7 @@ data:
             "kind": "codefresh",
             "service-url": "http://{{ printf "%s-cronus" .Release.Name }}",
             "uri-template": "cron:codefresh:{{"{{"}}expression{{"}}"}}:{{"{{"}}message{{"}}"}}",
-            "uri-regex": "^cron:codefresh:@yearly|@annually|@montly|@weekly|@daily|@midnight|@hourly|([a-zA-Z0-9*/,-?]+\\s?){6,7}:[a-zA-Z0-9_+\s-#?.:]{2,128}$",
+            "uri-regex": "^cron:codefresh:@yearly|@annually|@montly|@weekly|@daily|@midnight|@hourly|([a-zA-Z0-9*/,-?]+\\s?){6,7}:[a-zA-Z0-9_+\\s-#?.:]{2,128}$",
             "help-url": "https://codefresh.io/docs/docs/pipeline-triggers/configure-dockerhub-trigger/",
             "config": [{
                     "name": "expression",
@@ -74,7 +74,7 @@ data:
                     "name": "message",
                     "type": "string",
                     "help": "text to send with each trigger",
-                    "validator": "^[a-zA-Z0-9_+\s-#?.:]{2,128}$",
+                    "validator": "^[a-zA-Z0-9_+\\s-#?.:]{2,128}$",
                     "required": true
                 }
             ],
