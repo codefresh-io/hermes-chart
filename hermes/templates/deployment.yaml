@@ -38,6 +38,11 @@ spec:
           - name: GIN_MODE
             value: release
           {{- end }}
+          - name: NEWRELIC_LICENSE_KEY
+            valueFrom:
+              secretKeyRef:
+                name: "{{ .Release.Name }}-{{ .Values.global.codefresh }}"
+                key: newrelic-license-key
           - name: STORE_HOST
             value: "{{ .Release.Name }}-{{ .Values.redis.nameOverride }}"
           - name: STORE_PORT
