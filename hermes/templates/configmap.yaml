@@ -62,7 +62,7 @@ data:
             "service-url": "http://{{ printf "%s-cronus" .Release.Name }}",
             "uri-template": "cron:codefresh:{{"{{"}}expression{{"}}"}}:{{"{{"}}message{{"}}"}}",
             "uri-regex": "^cron:codefresh:@yearly|@annually|@montly|@weekly|@daily|@midnight|@hourly|([a-zA-Z0-9*/,-?]+\\s?){6,7}:[a-zA-Z0-9_+\\s-#?.:]{2,128}$",
-            "help-url": "https://codefresh.io/docs/docs/pipeline-triggers/configure-dockerhub-trigger/",
+            "help-url": "https://codefresh.io/docs/docs/configure-ci-cd-pipeline/triggers/cron-triggers/",
             "config": [{
                     "name": "expression",
                     "type": "cron",
