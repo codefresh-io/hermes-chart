@@ -22,7 +22,7 @@ spec:
       volumes:
         - name: config-volume
           configMap:
-            name: {{ template "hermes.fullname" . }}
+            name: {{ template "hermes.fullname" . }}-types
             items:
               - key: types_config.json
                 path: types_config.json
