@@ -9,6 +9,5 @@ metadata:
     heritage: {{ .Release.Service }}
 data:
   # create empty type_config.json filem just to not block pod loading
-  type_config.json: |
-  {}
+  type_config.json:
  
