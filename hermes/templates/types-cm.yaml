@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "hermes.fullname" . }}-types
+  labels:
+    app: {{ template "hermes.name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+data:
+  # create empty type_config.json filem just to not block pod loading
+  type_config.json: |
+  {}
+ 
