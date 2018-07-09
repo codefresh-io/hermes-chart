@@ -24,8 +24,8 @@ spec:
           configMap:
             name: {{ template "hermes.fullname" . }}-types
             items:
-              - key: types_config.json
-                path: types_config.json
+              - key: type_config.json
+                path: type_config.json
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
