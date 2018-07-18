@@ -1,6 +1,6 @@
 {{- if .Values.backup.enabled }}
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ template "hermes.fullname" . }}-store-backup
@@ -12,6 +12,9 @@ metadata:
     heritage: {{ .Release.Service }}
 spec:
   replicas: {{ .Values.backup.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ template "hermes.name" . }}
   template:
     metadata:
       labels:
