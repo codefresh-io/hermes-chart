@@ -98,7 +98,44 @@ data:
               }
             ]
           },
-
+          {
+            "type": "registry",
+            "kind": "jfrog",
+            "service-url": "http://{{ printf "%s-nomios" .Release.Name }}",
+            "uri-template": "registry:jfrog:{{"{{"}}namespace{{"}}"}}:{{"{{"}}name{{"}}"}}:{{"{{"}}action{{"}}"}}",
+            "uri-regex": "^registry:jfrog:[a-z0-9_-]+:[a-z0-9_-]+:push$",
+            "help-url": "https://codefresh.io/docs/docs/pipeline-triggers/configure-jfrog-trigger/",
+            "config": [
+                {
+                    "name": "namespace",
+                    "type": "string",
+                    "validator": "^[a-z0-9_-]+$",
+                    "required": true
+                },
+                {
+                    "name": "name",
+                    "type": "string",
+                    "validator": "^[a-z0-9_-]+$",
+                    "required": true
+                },
+                {
+                    "name": "action",
+                    "type": "list",
+                    "options": {
+                        "Push Image": "push"
+                    },
+                    "validator": "^(push)$",
+                    "required": true
+                }
+            ],
+            "filters": [
+                {
+                    "name": "tag",
+                    "type": "string",
+                    "validator": "^.+$"
+                }
+            ]
+          },
           {
             "type": "cron",
             "kind": "codefresh",
@@ -125,4 +162,3 @@ data:
           }
         ]
     }
- 
