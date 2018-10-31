@@ -33,6 +33,12 @@ spec:
           ports:
             - containerPort: {{ .Values.service.internalPort }}
           env:
+          {{- if .Values.global.env }}
+          {{- range $key, $value := .Values.global.env }}
+          - name: {{ $key }}
+            value: {{ $value | quote }}
+          {{- end}}
+          {{- end}}          
           - name: LOG_LEVEL
             value: {{ .Values.logLevel | quote }}
           - name: LOG_JSON
