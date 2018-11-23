@@ -110,12 +110,14 @@ data:
                     "name": "namespace",
                     "type": "string",
                     "validator": "^[a-z0-9_-]+$",
+                    "help": "name of repository",
                     "required": true
                 },
                 {
                     "name": "name",
                     "type": "string",
                     "validator": "^[a-z0-9_-]+$",
+                    "help": "docker image name",
                     "required": true
                 },
                 {
@@ -124,6 +126,7 @@ data:
                     "options": {
                         "Push Image": "push"
                     },
+                    "help": "docker push command",
                     "validator": "^(push)$",
                     "required": true
                 }
