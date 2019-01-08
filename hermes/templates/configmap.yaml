@@ -177,6 +177,40 @@ data:
                 }
             ]
           },
+
+          {
+              "type": "helm",
+              "kind": "jfrog",
+              "service-url": "http://{{ printf "%s-nomios" .Release.Name }}",
+              "uri-template": "helm:jfrog:{{"{{"}}repository{{"}}"}}:{{"{{"}}chart name{{"}}"}}:{{"{{"}}action{{"}}"}}",
+              "uri-regex": "^helm:jfrog:[a-z0-9_-]+:[a-z0-9_-]+:push$",
+              "config": [
+                  {
+                      "name": "repository",
+                      "type": "string",
+                      "validator": "^[a-z0-9_-]+$",
+                      "required": true
+                  },
+                  {
+                      "name": "chart name",
+                      "type": "string",
+                      "validator": "^[a-z0-9_-]+$",
+                      "required": true
+                  },
+                  {
+                      "name": "action",
+                      "type": "list",
+                      "options": {
+                          "Push Chart": "push"
+                      },
+                      "validator": "^(push)$",
+                      "required": true
+                  }
+              ]
+          },
+
+
+
           {
             "type": "cron",
             "kind": "codefresh",
