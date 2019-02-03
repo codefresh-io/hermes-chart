@@ -25,9 +25,10 @@ spec:
         fsGroup: {{ .Values.securityContext.fsGroup }}
         runAsUser: {{ .Values.securityContext.runAsUser }}
       {{- end }}
-      {{- if .Values.nodeSelector }}
+      {{- $nodeSelector := coalesce .Values.nodeSelector .Values.global.storagePodNodeSelector }}
+      {{- if $nodeSelector }}
       nodeSelector:
-{{ toYaml .Values.nodeSelector | indent 8 }}
+{{ toYaml $nodeSelector | indent 8 }}
       {{- end }}
       {{- if .Values.tolerations }}
       tolerations:
