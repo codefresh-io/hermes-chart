@@ -43,6 +43,12 @@ spec:
 {{ toYaml .Values.args | indent 10 }}
         {{- end }}
         env:
+        {{- if .Values.global.env }}
+        {{- range $key, $value := .Values.global.env }}
+        - name: {{ $key }}
+          value: {{ $value | quote }}
+        {{- end}}
+        {{- end}}
         {{- if .Values.usePassword }}
         - name: REDIS_PASSWORD
           valueFrom:
