@@ -33,7 +33,7 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           {{- if .Values.global.privateRegistry }} 
-          image: "{{ .Values.global.dockerRegistry }}{{ .Values.image }}:{{ .Values.imageTag }}"
+          image: "{{ .Values.global.dockerRegistry }}{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           {{- else }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           {{- end }}
