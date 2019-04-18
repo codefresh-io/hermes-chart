@@ -34,9 +34,17 @@ spec:
       tolerations:
 {{ toYaml .Values.tolerations | indent 8 }}
       {{- end }}
+      {{- if .Values.global.privateRegistry }}
+      imagePullSecrets:
+        - name: "{{ .Release.Name }}-{{ .Values.global.codefresh }}-registry"
+      {{- end }}
       containers:
       - name: {{ template "redis.fullname" . }}
+        {{- if .Values.global.privateRegistry }} 
+        image: "{{ .Values.global.dockerRegistry }}{{ .Values.image }}"
+        {{- else }}
         image: "{{ .Values.image }}"
+        {{- end }}
         imagePullPolicy: {{ default "" .Values.imagePullPolicy | quote }}
         {{- if .Values.args }}
         args:
