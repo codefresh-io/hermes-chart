@@ -36,7 +36,11 @@ spec:
       {{- end }}
       containers:
       - name: {{ template "redis.fullname" . }}
+        {{- if .Values.global.privateRegistry }} 
+        image: "{{ .Values.global.dockerRegistry }}{{ .Values.image }}"
+        {{- else }}
         image: "{{ .Values.image }}"
+        {{- end }}
         imagePullPolicy: {{ default "" .Values.imagePullPolicy | quote }}
         {{- if .Values.args }}
         args:
